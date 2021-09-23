@@ -1,0 +1,60 @@
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="https://ninjastream.to/favicon.ico" type="image/x-icon"/>
+<link rel="shortcut icon" href="https://ninjastream.to/favicon.ico" type="image/x-icon"/>
+	
+<script>
+function loading(){
+	var url = new URL(window.location);
+	var id = url.searchParams.get("id");
+	var player = document.getElementById("videoplayer");
+	var downloads = document.getElementById("videodownload");
+	
+	document.title = id+" - dg"
+	//downloads.action = "https://ninjastream.to/download/"+id
+	//player.src = "https://ninjastream.to/watch/"+id
+player.src = "https://voe.sx/e/"+id
+ //player.sandbox = 'allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation'
+
+ player.sandbox = 'allow-scripts'
+};
+
+</script>
+<style>
+.download {
+	background-color: #4CAF50;
+  	border: none;
+    color: white;
+    padding: 15px 284px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+.new {
+    background-color: #ff4d00;
+    border: none;
+    color: white;
+    padding: 15px 280px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+body {
+    background-color: #181a1b;
+    color: white;
+}
+</style>
+<center>
+<iframe id="videoplayer" src="https://ninjastream.to/watch/CHANGER" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" allowfullscreen width="100%" height="100%"></iframe>
+<title>Ninjastream.io Player</title>
+<br>
+</head>
+<body onload="loading()">
+
+	
+</body>
+</center>
