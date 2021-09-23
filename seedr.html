@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sEEDR Generator</title>
+</head>
+
+<body>
+    <label>Enter User</label>
+    <input type="text" value="" id="user"  /><br>
+
+      <label>Enter Pass</label>
+    <input type="text" value="" id="pass"  /><br>
+    
+        <label>Enter File ID</label>
+    <input type="text" value="" id="fid"  onchange="genlink()" onforminput="genlink()" oninput="genlink()" /><br>
+            <button onclick="genlink()" style="height: 40px;width:80px"  >Generate Link </button>
+            <button onclick="()=>{document.getElementById('fid').value = ''}" style="height: 40px;width:80px"  >Clear! </button>
+
+    
+    <br><br><br>
+    
+          <label>Link</label>
+    <input type="text" value="" id="link"  /><br>
+    
+    
+    
+              <label>Hash</label>
+    <input type="text" value="" id="hash" /><br>
+        <button onclick="genhash()" style="height: 40px;width:80px"  >Generate Hash </button>
+<br><br><br>
+    
+    
+    <label for="files">Files:</label>
+
+<textarea id="files" name="files" style="height: 80px;width:900px">
+................
+</textarea>
+    <br>
+    
+              <label>Add Magnet</label>
+    <input type="text" value="" id="magnet"  />
+    
+        
+            <button onclick="add()" style="height: 40px;width:80px" >Add magnet </button>
+<br>
+        <button onclick="getFiles()" style="height: 40px;width:80px" >Get Files </button>
+        <button onclick="getall()" style="height: 40px;width:80px" >Get All </button>
+        <button onclick="getfolders()" style="height: 40px;width:80px" >Get Folders </button>
+
+<br>
+
+<button onclick="getband()" style="height: 40px;width:80px" >Get Bandwidth </button>
+    
+    <button onclick="getsettings()" style="height: 40px;width:80px" >Get settings </button>
+        <br>
+    
+              <label>Delete Id:- </label>
+    <input type="text" value="" id="todelete"  />
+                <button onclick="deletefile()" style="height: 40px;width:80px" >delete file </button>
+                <button onclick="deletefolder()" style="height: 40px;width:80px" >delete folder </button>
+
+
+<label>search- </label>
+    <input type="text" value="" id="tosearch"  />
+                <button onclick="search()" style="height: 40px;width:80px" >Search </button>
+            
+
+
+    <br>
+    <br>
+        <label for="log">log:</label>
+
+    <textarea id="log" name="log" style="height: 200px;width:900px">
+................
+</textarea>
+</body>
+<script>
+    let domain = 'https://thawing-scrubland-27252.herokuapp.com/';
+
+    function genlink() {
+        var hash = document.getElementById("hash").value;
+        var id = document.getElementById("fid").value;
+        var net = domain+"seedr/download?id="+id+"&hash="+hash;
+//         net = net.replace("?dl=0", "");
+
+        document.getElementById("link").value = net;
+       /* Get the text field */
+       var copyText = document.getElementById("link");
+      /* Select the text field */
+       copyText.select();
+       copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+      /* Copy the text inside the text field */
+      document.execCommand("copy");
+        }
+
+    function genhash(){
+                var user = document.getElementById("user").value;
+                var pass = document.getElementById("pass").value;
+              //..document.getElementById("hash").value;
+
+
+
+//         var n = true;
+//         while(n==true){
+      var xhttp = new XMLHttpRequest();
+   xhttp.onreadystatechange = function() {
+       
+     if (this.readyState == 4 && this.status == 200) {
+         
+//             if(this.responseText.includes("/") || this.responseText.includes("+")){
+//                          n=true;
+//            }else{
+//        document.getElementById("hash").value = this.responseText;
+//          n=false;
+//         }
+         
+         
+        document.getElementById("hash").value =   encodeURIComponent(this.responseText);
+         
+         
+     }
+   };
+   xhttp.open("GET", domain+"encrypt?user="+user+"&pass="+pass, true);
+   xhttp.send();
+//     }
+    
+    }
+    
+    
+       function getFiles(){
+       var hash = document.getElementById("hash").value;
+
+              //..document.getElementById("hash").value;
+      var xhttp = new XMLHttpRequest();
+   xhttp.onreadystatechange = function() {
+     if (this.readyState == 4 && this.status == 200) {
+       console.log(this.responseText);
+         document.getElementById("files").value = this.responseText;
+     }
+   };
+   xhttp.open("GET", domain+"seedr/get?hash="+hash, true);
+   xhttp.send();
+    
+    
+    }
+    
+    
+          function getall(){
+       var hash = document.getElementById("hash").value;
+
+              //..document.getElementById("hash").value;
+      var xhttp = new XMLHttpRequest();
+   xhttp.onreadystatechange = function() {
+     if (this.readyState == 4 && this.status == 200) {
+       console.log(this.responseText);
+         document.getElementById("files").value = this.responseText;
+     }
+   };
+   xhttp.open("GET", domain+"seedr/getall?hash="+hash, true);
+   xhttp.send();
+    
+    
+    }
+    
+          function getfolders(){
+       var hash = document.getElementById("hash").value;
+
+              //..document.getElementById("hash").value;
+      var xhttp = new XMLHttpRequest();
+   xhttp.onreadystatechange = function() {
+     if (this.readyState == 4 && this.status == 200) {
+       console.log(this.responseText);
+         document.getElementById("files").value = this.responseText;
+     }
+   };
+   xhttp.open("GET", domain+"seedr/getfolders?hash="+hash, true);
+   xhttp.send();
+    
+    
+    }
+    
+    
+           function add(){
+       var hash = document.getElementById("hash").value;
+       var link = document.getElementById("magnet").value;
+
+              //..document.getElementById("hash").value;
+      var xhttp = new XMLHttpRequest();
+   xhttp.onreadystatechange = function() {
+     if (this.readyState == 4 && this.status == 200) {
+       console.log(this.responseText);
+document.getElementById("log").value = this.responseText;
+     }
+   };
+   xhttp.open("GET", domain+"seedr/magnet?hash="+hash+"&link="+link, true);
+   xhttp.send();
+    
+    
+    }
+    
+        
+           function deletefile(){
+       var hash = document.getElementById("hash").value;
+       var link = document.getElementById("todelete").value;
+
+              //..document.getElementById("hash").value;
+      var xhttp = new XMLHttpRequest();
+   xhttp.onreadystatechange = function() {
+     if (this.readyState == 4 && this.status == 200) {
+       console.log(this.responseText);
+document.getElementById("log").value =  this.responseText;
+     }
+   };
+   xhttp.open("GET", domain+"seedr/deletefile?hash="+hash+"&id="+link, true);
+   xhttp.send();
+    
+    
+    }
+
+
+
+           function deletefolder(){
+       var hash = document.getElementById("hash").value;
+       var link = document.getElementById("todelete").value;
+
+              //..document.getElementById("hash").value;
+      var xhttp = new XMLHttpRequest();
+   xhttp.onreadystatechange = function() {
+     if (this.readyState == 4 && this.status == 200) {
+    
+         
+       console.log(this.responseText);
+     }
+   };
+   xhttp.open("GET", domain+"seedr/deletefolder?hash="+hash+"&id="+link, true);
+   xhttp.send();
+    
+    
+    }
+
+
+
+function search(){
+       var hash = document.getElementById("hash").value;
+       var link = document.getElementById("tosearch").value;
+
+              //..document.getElementById("hash").value;
+      var xhttp = new XMLHttpRequest();
+   xhttp.onreadystatechange = function() {
+     if (this.readyState == 4 && this.status == 200) {
+    document.getElementById("log").value = this.responseText;
+       console.log(this.responseText);
+     }
+   };
+   xhttp.open("GET", domain+"seedr/search?hash="+hash+"&query="+link, true);
+   xhttp.send();
+    
+    
+    }
+
+
+function getband(){
+       var hash = document.getElementById("hash").value;
+
+              //..document.getElementById("hash").value;
+      var xhttp = new XMLHttpRequest();
+   xhttp.onreadystatechange = function() {
+     if (this.readyState == 4 && this.status == 200) {
+    document.getElementById("log").value =  this.responseText;
+       console.log(this.responseText);
+     }
+   };
+   xhttp.open("GET", domain+"seedr/getband?hash="+hash, true);
+   xhttp.send();
+    
+    
+    }
+
+function getsettings(){
+       var hash = document.getElementById("hash").value;
+
+              //..document.getElementById("hash").value;
+      var xhttp = new XMLHttpRequest();
+   xhttp.onreadystatechange = function() {
+     if (this.readyState == 4 && this.status == 200) {
+    document.getElementById("log").value = this.responseText;
+       console.log(this.responseText);
+     }
+   };
+   xhttp.open("GET", domain+"seedr/getsettings?hash="+hash, true);
+   xhttp.send();
+    
+    
+    }
+
+
+
+
+    
+//     deletefile()
+
+    
+</script>
+
+</html>
